@@ -1,0 +1,35 @@
+### Define a Service for application 'spring-boot-quotes'
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-quotes-service
+  namespace: spring-boot-quotes
+spec:
+  selector:
+    app: spring-boot-quotes
+  ports:
+    - protocol: TCP
+      port: 80           # exposed port number 
+      targetPort: 8080   # forworded port number into application
+      nodePort: 30090    # mapped port number in the cluster
+  type: LoadBalancer
+---
+### Define an Ingress to connect with the Service
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-boot-quotes-ingress
+  namespace: spring-boot-quotes
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: 'home-lab.api.jaspermsnbk.com'   # hostname to be connected in the Ingress
+      http:
+        paths:
+          - backend:
+              service:
+                name: spring-boot-quotes-service
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix

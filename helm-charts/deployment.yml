@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-quotes
+  namespace: spring-boot-quotes
+  labels:
+    app: spring-boot-quotes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-quotes
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: spring-boot-quotes
+      labels:
+        app: spring-boot-quotes
+    spec:
+      containers:
+        - name: spring-boot-quotes
+          repository: docker.io/jaspermesenbrink 
+          image: cavecafe/spring-boot-quotes:latest # docker repository path
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 3000
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 60m
+      restartPolicy: Always
+      imagePullSecrets:
+        - regcred
