@@ -23,8 +23,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-quotes
-          repository: docker.io/jaspermesenbrink 
-          image: cavecafe/spring-boot-quotes:latest # docker repository path
+          image: docker.io/jaspermesenbrink/demo:latest # docker repository path
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -37,4 +36,4 @@ spec:
               cpu: 60m
       restartPolicy: Always
       imagePullSecrets:
-        - regcred
+        - name: regcred
