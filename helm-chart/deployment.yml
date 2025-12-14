@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-quotes
-          image: docker.io/jaspermesenbrink/demo:latest # docker repository path
+          image: docker.io/jaspermesenbrink/demo:latest-arm64 # docker repository path
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
